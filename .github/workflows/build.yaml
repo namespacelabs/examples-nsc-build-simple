@@ -1,4 +1,4 @@
-name: build example
+name: build
 on: [push, workflow_dispatch]
 
 permissions:
