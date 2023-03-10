@@ -1,0 +1,17 @@
+name: build example
+on: [push, workflow_dispatch]
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+jobs:
+  build_with_nscloud:
+    runs-on: ubuntu-latest
+    name: Build a sample application to Namespace Cloud
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install and configure Namespace Cloud CLI
+        uses: namespacelabs/nscloud-setup@v0.0.1
+      - name: Build in Namespace Cloud cluster
+        run: | 
+          nsc build . --push_to_nsc_repo test-nsc-build-example
