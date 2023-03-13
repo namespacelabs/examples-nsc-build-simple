@@ -14,4 +14,7 @@ jobs:
         uses: namespacelabs/nscloud-setup@v0.0.1
       - name: Build in Namespace Cloud cluster
         run: | 
-          nsc build . --push_to_nsc_repo test-nsc-build-example
+          nsc build . --push_to_docker go-hello-world --tag v0.0.1,dev
+      - name: Run Docker container
+        run: |
+          docker run go-hello-world:v0.0.1
