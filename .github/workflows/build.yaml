@@ -4,17 +4,30 @@ on: [push, workflow_dispatch]
 permissions:
   id-token: write # This is required for requesting the JWT
 jobs:
-  build_with_nscloud:
+  build_with_docker:
     runs-on: ubuntu-latest
-    name: Build a sample application to Namespace Cloud
+    name: Build with Docker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker build
+        run: |
+          docker build . --tag ns-django:v0.0.1
+      - name: List Docker images
+        run: |
+          docker images
+
+  build_with_nscloud_to_docker:
+    runs-on: ubuntu-latest
+    name: Build with Namespace Cloud push to local registry
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.1
       - name: Build in Namespace Cloud cluster
-        run: | 
-          nsc build . --push_to_docker go-hello-world --tag v0.0.1,dev
-      - name: Run Docker container
         run: |
-          docker run go-hello-world:v0.0.1
+          nsc build . --push_to_docker ns-django --tag v0.0.1,dev
+      - name: List Docker images
+        run: |
+          docker images

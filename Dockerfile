@@ -1,25 +1,11 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.4
 
-## Build step
-FROM golang:1.20-alpine AS build
+FROM --platform=$BUILDPLATFORM python:3.7-alpine AS builder
+WORKDIR /app 
+COPY requirements.txt /app
+RUN pip3 install -r requirements.txt --no-cache-dir
+COPY . /app 
 
-WORKDIR /app
-
-ENV CGO_ENABLED 0
-
-COPY go.* ./
-COPY *.go ./
-
-RUN go build -o /goapp
-
-
-## Deploy step
-FROM gcr.io/distroless/base-debian10 as prod
-
-WORKDIR /
-
-COPY --from=build /goapp /goapp
-
-USER nonroot:nonroot
-
-ENTRYPOINT ["/goapp"]
+EXPOSE 8000
+ENTRYPOINT ["python3"] 
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
