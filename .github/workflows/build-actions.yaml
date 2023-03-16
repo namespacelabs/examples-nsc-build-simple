@@ -1,4 +1,4 @@
-name: build
+name: build-with-actions
 on: [push, workflow_dispatch]
 
 permissions:
@@ -50,6 +50,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install and configure Namespace Cloud CLI
+        uses: namespacelabs/nscloud-setup@v0.0.2
 
       - name: Set up Nanespace Cloud Buildx
         uses: namespacelabs/nscloud-setup-buildx-action@v0.0.2
