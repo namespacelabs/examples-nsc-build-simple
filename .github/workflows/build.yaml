@@ -10,7 +10,7 @@ jobs:
     name: Build with Docker
     env:
       IMAGE_NAME: docker-django-example
-      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+      IMAGE_REPO: ghcr.io/${{ github.repository_owner }}
       VERSION: v0.0.1
     steps:
       - name: Checkout
@@ -22,15 +22,15 @@ jobs:
           DOCKER_BUILDKIT=1 docker build . --tag $IMAGE_NAME
       - name: Docker Push 
         run: |
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_REPO/$IMAGE_NAME:$VERSION
+          docker push $IMAGE_REPO/$IMAGE_NAME:$VERSION
 
   build_with_nscloud_to_docker:
     runs-on: ubuntu-latest
     name: Build with Namespace Cloud
     env:
       IMAGE_NAME: nsc-django-example
-      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+      IMAGE_REPO: ghcr.io/${{ github.repository_owner }}
       VERSION: v0.0.1
     steps:
       - name: Checkout
@@ -41,4 +41,4 @@ jobs:
         uses: namespacelabs/nscloud-setup@v0.0.1
       - name: Build and push with Namespace Cloud cluster
         run: |
-          nsc build . --push $IMAGE_ID --tag $VERSION
+          nsc build . --push $IMAGE_REPO/$IMAGE_NAME --tag $VERSION
