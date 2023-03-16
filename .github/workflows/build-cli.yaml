@@ -15,17 +15,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Log in to GitHub registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
       - name: Docker Build 
         run: |
           DOCKER_BUILDKIT=1 docker build . --tag $IMAGE_NAME
+
       - name: Docker Push 
         run: |
           docker tag $IMAGE_NAME $IMAGE_REPO/$IMAGE_NAME:$VERSION
           docker push $IMAGE_REPO/$IMAGE_NAME:$VERSION
 
-  build_with_nscloud_to_docker:
+  build_with_nscloud:
     runs-on: ubuntu-latest
     name: Build with Namespace Cloud
     env:
@@ -35,10 +38,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Log in to GitHub registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.1
+        uses: namespacelabs/nscloud-setup@v0.0.2
+
       - name: Build and push with Namespace Cloud cluster
         run: |
           nsc build . --push $IMAGE_REPO/$IMAGE_NAME --tag $VERSION
