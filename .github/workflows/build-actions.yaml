@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: $IMAGE_REPO/$IMAGE_NAME:$VERSION
+          tags: ${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
 
   build_with_nscloud:
@@ -61,4 +61,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: $IMAGE_REPO/$IMAGE_NAME:$VERSION
+          tags: ${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
