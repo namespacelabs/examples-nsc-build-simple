@@ -3,31 +3,42 @@ on: [push, workflow_dispatch]
 
 permissions:
   id-token: write # This is required for requesting the JWT
+  packages: write # This is required to push to GitHub registry
 jobs:
   build_with_docker:
     runs-on: ubuntu-latest
     name: Build with Docker
+    env:
+      IMAGE_NAME: docker-django-example
+      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+      VERSION: v0.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Docker build
+      - name: Log in to GitHub registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Docker Build 
         run: |
-          DOCKER_BUILDKIT=1 docker build . --tag ns-django:v0.0.1
-      - name: List Docker images
+          DOCKER_BUILDKIT=1 docker build . --tag $IMAGE_NAME
+      - name: Docker Push 
         run: |
-          docker images
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
 
   build_with_nscloud_to_docker:
     runs-on: ubuntu-latest
-    name: Build with Namespace Cloud push to local registry
+    name: Build with Namespace Cloud
+    env:
+      IMAGE_NAME: nsc-django-example
+      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+      VERSION: v0.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Log in to GitHub registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.1
-      - name: Build in Namespace Cloud cluster
+      - name: Build and push with Namespace Cloud cluster
         run: |
-          nsc build . --push_to_docker ns-django --tag v0.0.1,dev
-      - name: List Docker images
-        run: |
-          docker images
+          nsc build . --push $IMAGE_ID --tag $VERSION
