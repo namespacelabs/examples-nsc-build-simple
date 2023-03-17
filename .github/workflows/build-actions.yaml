@@ -36,7 +36,6 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-
   build_with_nscloud:
     runs-on: ubuntu-latest
     name: Build with Namespace Cloud
@@ -60,11 +59,11 @@ jobs:
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.2
 
-      # Setup build driver to use Buildkit hosted by your tenant's Namespace Cloud cluster
-      - name: Set up Nanespace Cloud Buildx
+      # Setup docker build to use your Namespace Cloud workspace build cluster
+      - name: Set up Namespace Cloud Buildx
         uses: namespacelabs/nscloud-setup-buildx-action@v0.0.2
 
-      # Run standard Docker's build-push action
+      # Run Docker build-push action
       - name: Build and push
         uses: docker/build-push-action@v4
         with:

@@ -37,13 +37,13 @@ jobs:
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.2
 
-      # Build and push with your tenant's Namespace Cloud cluster
+      # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
         run: |
           nsc build . --push ghcr.io/${{ github.repository_owner }}/app --tag latest
 ```
 
-See our [GitHub Workflow file](.github/workflows/build-cli.yaml) for more concrete example.
+See our [GitHub Workflow file](.github/workflows/build-cli.yaml) for a more concrete example.
 
 ### Github Actions
 
@@ -79,8 +79,8 @@ jobs:
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.2
 
-      # Setup build driver to use Buildkit hosted by your tenant's Namespace Cloud cluster
-      - name: Set up Nanespace Cloud Buildx
+      # Setup docker build to use your Namespace Cloud workspace build cluster
+      - name: Set up Namespace Cloud Buildx
         uses: namespacelabs/nscloud-setup-buildx-action@v0.0.2
 
       # Run standard Docker's build-push action
@@ -92,7 +92,7 @@ jobs:
           tags: ghcr.io/${{ github.repository_owner }}/app:latest
 ```
 
-See our [GitHub Workflow file](.github/workflows/build-actions.yaml) for more concrete example.
+See our [GitHub Workflow file](.github/workflows/build-actions.yaml) for a more concrete example.
 
 ## Run It Yourself!
 
@@ -109,4 +109,4 @@ See our [GitHub Workflow file](.github/workflows/build-actions.yaml) for more co
 
 ## Community
 
-Join us on [Discord](https://community.namespace.so/discord) for questions or feedbacks!
+Join us on [Discord](https://community.namespace.so/discord) for questions or feedback!
