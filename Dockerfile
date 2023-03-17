@@ -1,25 +1,28 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.4
 
-## Build step
-FROM golang:1.20-alpine AS build
+FROM python:3.9-slim as compiler
 
-WORKDIR /app
+ENV VIRTUAL_ENV=/opt/venv
+WORKDIR /app 
 
-ENV CGO_ENABLED 0
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+COPY requirements.txt /app
+RUN pip install -r requirements.txt
 
-COPY go.* ./
-COPY *.go ./
+FROM python:3.9-slim as runner
 
-RUN go build -o /goapp
+ENV VIRTUAL_ENV=/opt/venv
+WORKDIR /app 
 
+COPY --from=compiler $VIRTUAL_ENV $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+COPY . /app 
 
-## Deploy step
-FROM gcr.io/distroless/base-debian10 as prod
+RUN useradd -u 1000 djangouser
+RUN chown -R djangouser /app
+USER djangouser
 
-WORKDIR /
-
-COPY --from=build /goapp /goapp
-
-USER nonroot:nonroot
-
-ENTRYPOINT ["/goapp"]
+EXPOSE 8000
+ENTRYPOINT ["python3"] 
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
