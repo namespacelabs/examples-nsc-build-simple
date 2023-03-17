@@ -2,19 +2,6 @@
 
 This repository shows how to use [Namespace Cloud](https://cloud.namespace.so/) to build a sample Docker container.
 
-## Run It Yourself!
-
-1. [Fork](https://github.com/namespacelabs/examples-nsc-build-simple/fork) this repository;
-2. Enable the GitHub Actions for it;
-3. Configure the GitHub Actions to have `write` permissions on the repository;
-   1. Go to _Settings_, then _Actions_ and finally _General_;
-   2. Scroll down to _Workflow permissions_;
-   3. Set _Read and write permissions_ option;
-4. Manually run the _build_ workflow;
-5. Pull the image locally!
-
-   `docker pull ghcr.io/< your username >/nsc-django-example:v0.0.1`
-
 ## Examples
 
 ### Namespace Cloud CLI
@@ -52,6 +39,8 @@ jobs:
         run: |
           nsc build . --push ghcr.io/${{ github.repository_owner }}/app --tag latest
 ```
+
+See our [GitHub Workflow file](.github/workflows/build-cli.yaml) for more concrete example.
 
 ### Github Actions
 
@@ -99,6 +88,21 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/app:latest
 ```
+
+See our [GitHub Workflow file](.github/workflows/build-actions.yaml) for more concrete example.
+
+## Run It Yourself!
+
+1. [Fork](https://github.com/namespacelabs/examples-nsc-build-simple/fork) this repository;
+2. Enable the GitHub Actions for it;
+3. Configure the GitHub Actions to have `write` permissions on the repository;
+   1. Go to _Settings_, then _Actions_ and finally _General_;
+   2. Scroll down to _Workflow permissions_;
+   3. Set _Read and write permissions_ option;
+4. Manually run the _build_ workflow;
+5. Pull the image locally!
+
+   `docker pull ghcr.io/< your username >/nsc-django-example:v0.0.1`
 
 ## Community
 
