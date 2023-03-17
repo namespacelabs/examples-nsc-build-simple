@@ -16,13 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # We are going to push to GH Container Registry
       - name: Log in to GitHub registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
+      # Run Docker build with Buildkit driver
       - name: Docker Build 
         run: |
           DOCKER_BUILDKIT=1 docker build . --tag $IMAGE_NAME
 
+      # Tag the image and finally push
       - name: Docker Push 
         run: |
           docker tag $IMAGE_NAME $IMAGE_REPO/$IMAGE_NAME:$VERSION
@@ -39,12 +42,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # We are going to push to GH Container Registry
       - name: Log in to GitHub registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
+      # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
         uses: namespacelabs/nscloud-setup@v0.0.2
 
+      # Build and push with your tenant's Namespace Cloud cluster
       - name: Build and push with Namespace Cloud cluster
         run: |
           nsc build . --push $IMAGE_REPO/$IMAGE_NAME --tag $VERSION
