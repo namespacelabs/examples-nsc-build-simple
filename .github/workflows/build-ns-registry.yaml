@@ -1,4 +1,4 @@
-name: build-and-push-private-registry
+name: build-and-push-ns-registry
 on: [push, workflow_dispatch]
 
 permissions:
@@ -16,7 +16,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        id: nscloud
+        id: nscloud # Needed to access its outputs
         uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Setup build driver to use Buildkit container
@@ -43,7 +43,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        id: nscloud
+        id: nscloud # Needed to access its outputs
         uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
