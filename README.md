@@ -35,7 +35,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.2
+        uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
@@ -77,7 +77,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.2
+        uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx

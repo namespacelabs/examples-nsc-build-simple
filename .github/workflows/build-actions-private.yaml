@@ -17,7 +17,7 @@ jobs:
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
         id: nscloud
-        uses: namespacelabs/nscloud-setup@v0.0.2
+        uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Setup build driver to use Buildkit container
       - name: Set up Docker Buildx
@@ -44,7 +44,7 @@ jobs:
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
         id: nscloud
-        uses: namespacelabs/nscloud-setup@v0.0.2
+        uses: namespacelabs/nscloud-setup@v0.0.3
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx
