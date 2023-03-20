@@ -100,7 +100,7 @@ See our [GitHub Workflow file](.github/workflows/build-actions.yaml) for a more 
 This example uses Namespace Cloud Actions to build and push a Docker image to Namespace Cloud Container Registry.
 
 ```yaml
-name: build-and-push-private-registry
+name: build-and-push-ns-registry
 on: [push]
 
 permissions:
