@@ -41,7 +41,7 @@ jobs:
       # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
         run: |
-          nsc build . --push ghcr.io/${{ github.repository_owner }}/app --tag latest
+          nsc build . -t ghcr.io/${{ github.repository_owner }}/app:latest --push
 ```
 
 See our [GitHub Workflow file](.github/workflows/build-cli.yaml) for a more concrete example.

@@ -49,4 +49,4 @@ jobs:
       # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
         run: |
-          nsc build . --push $IMAGE_REPO/$IMAGE_NAME --tag $VERSION
+          nsc build . -t $IMAGE_REPO/$IMAGE_NAME:$VERSION --push
