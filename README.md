@@ -44,6 +44,42 @@ jobs:
           nsc build . -t ghcr.io/${{ github.repository_owner }}/app:latest --push
 ```
 
+By default `nsc` builds an image of local host platform. To build
+a multi-platform image or an image for another platform, `--platform` flag can
+be used. For example:
+
+```yaml
+name: build-with-cli
+on: [push]
+
+permissions:
+  # Required for requesting the GitHub Token
+  id-token: write
+  # Required for pushing images to GitHub Container Registry
+  packages: write
+
+jobs:
+  build_with_nscloud:
+    runs-on: ubuntu-latest
+    name: Build with Namespace Cloud
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # We are going to push to GH Container Registry
+      - name: Log in to GitHub registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      # Install CLI and authenticate to Namespace Cloud
+      - name: Install and configure Namespace Cloud CLI
+        uses: namespacelabs/nscloud-setup@v0.0.3
+
+      # Build and push with your Namespace Cloud workspace build cluster
+      - name: Build and push with Namespace Cloud cluster
+        run: |
+          nsc build . -t ghcr.io/${{ github.repository_owner }}/app:latest --push --platform=linux/arm64,linux/amd64
+```
+
 See our [GitHub Workflow file](.github/workflows/build-cli.yaml) for a more concrete example.
 
 ### Github Actions
@@ -78,11 +114,11 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.3
+        uses: namespacelabs/nscloud-setup@v0.0.4
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx
-        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.2
+        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.3
 
       # Run standard Docker's build-push action
       - name: Build and push
@@ -118,11 +154,11 @@ jobs:
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
         id: nscloud # Needed to access its outputs
-        uses: namespacelabs/nscloud-setup@v0.0.3
+        uses: namespacelabs/nscloud-setup@v0.0.4
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx
-        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.2
+        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.3
 
       # Run standard Docker's build-push action
       - name: Build and push
