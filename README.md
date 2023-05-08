@@ -36,7 +36,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.5
+        uses: namespacelabs/nscloud-setup@v0
 
       # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
@@ -72,7 +72,7 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.5
+        uses: namespacelabs/nscloud-setup@v0
 
       # Build and push with your Namespace Cloud workspace build cluster
       - name: Build and push with Namespace Cloud cluster
@@ -114,11 +114,11 @@ jobs:
 
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
-        uses: namespacelabs/nscloud-setup@v0.0.5
+        uses: namespacelabs/nscloud-setup@v0
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx
-        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.4
+        uses: namespacelabs/nscloud-setup-buildx-action@v0
 
       # Run standard Docker's build-push action
       - name: Build and push
@@ -154,11 +154,11 @@ jobs:
       # Install CLI and authenticate to Namespace Cloud
       - name: Install and configure Namespace Cloud CLI
         id: nscloud # Needed to access its outputs
-        uses: namespacelabs/nscloud-setup@v0.0.5
+        uses: namespacelabs/nscloud-setup@v0
 
       # Setup docker build to use your Namespace Cloud workspace build cluster
       - name: Set up Namespace Cloud Buildx
-        uses: namespacelabs/nscloud-setup-buildx-action@v0.0.4
+        uses: namespacelabs/nscloud-setup-buildx-action@v0
 
       # Run standard Docker's build-push action
       - name: Build and push
