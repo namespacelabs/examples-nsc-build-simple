@@ -6,7 +6,7 @@ permissions:
   packages: write # This is required to push to GitHub registry
 jobs:
   build_with_docker:
-    runs-on: ubuntu-latest
+    runs-on: nscloud
     name: Build with Docker
     env:
       IMAGE_NAME: docker-django-example
@@ -28,7 +28,7 @@ jobs:
           docker push $IMAGE_REPO/$IMAGE_NAME:$VERSION
 
   build_with_nscloud:
-    runs-on: ubuntu-latest
+    runs-on: nscloud
     name: Build with Namespace Cloud
     env:
       IMAGE_NAME: nsc-django-example
