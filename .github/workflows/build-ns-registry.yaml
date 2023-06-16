@@ -5,7 +5,7 @@ permissions:
   id-token: write # This is required for requesting the JWT
 jobs:
   build_with_docker:
-    runs-on: nscloud
+    runs-on: ubuntu-latest
     name: Build with Docker
     env:
       IMAGE_NAME: docker-django-example
